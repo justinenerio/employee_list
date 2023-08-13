@@ -85,32 +85,32 @@ class _CalendarPickerWidgetState extends State<CalendarPickerWidget> {
       shrinkWrap: true,
       children: widget.isStart
           ? [
-              ElevatedButton(
+              _Button(
                 onPressed: () => _updateDate(DateTime.now()),
-                child: const Text('Today'),
+                label: 'Today',
               ),
-              ElevatedButton(
+              _Button(
                 onPressed: () => _updateToWeek(1),
-                child: const Text('Next Monday'),
+                label: 'Next Monday',
               ),
-              ElevatedButton(
+              _Button(
                 onPressed: () => _updateToWeek(2),
-                child: const Text('Next Tuesday'),
+                label: 'Next Tuesday',
               ),
-              ElevatedButton(
+              _Button(
                 onPressed: () =>
                     _updateDate(DateTime.now().add(const Duration(days: 7))),
-                child: const Text('After 1 week'),
+                label: 'After 1 week',
               )
             ]
           : [
-              ElevatedButton(
+              _Button(
                 onPressed: _clearDate,
-                child: const Text('No Date'),
+                label: 'No Date',
               ),
-              ElevatedButton(
+              _Button(
                 onPressed: () => _updateDate(DateTime.now()),
-                child: const Text('Today'),
+                label: 'Today',
               )
             ],
     );
@@ -139,10 +139,15 @@ class _CalendarPickerWidgetState extends State<CalendarPickerWidget> {
               const Spacer(),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey[300],
+                  backgroundColor: const Color(0xffEDF8FF),
                 ),
                 onPressed: () => Navigator.of(context).pop(),
-                child: const Text('Cancel'),
+                child: Text(
+                  'Cancel',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
               ),
               const SizedBox(width: 8),
               ElevatedButton(
@@ -157,6 +162,30 @@ class _CalendarPickerWidgetState extends State<CalendarPickerWidget> {
           ),
         )
       ],
+    );
+  }
+}
+
+class _Button extends StatelessWidget {
+  const _Button({required this.onPressed, required this.label});
+  final VoidCallback onPressed;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      style: TextButton.styleFrom(
+        backgroundColor: const Color(0xffEDF8FF),
+      ),
+      onPressed: onPressed,
+      child: Text(
+        label,
+        style: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          color: Theme.of(context).primaryColor,
+        ),
+      ),
     );
   }
 }

@@ -244,10 +244,13 @@ class __BodyState extends State<_Body> {
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[300],
+                    backgroundColor: const Color(0xffEDF8FF),
                   ),
                   onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Cancel'),
+                  child: Text(
+                    'Cancel',
+                    style: TextStyle(color: Theme.of(context).primaryColor),
+                  ),
                 ),
                 const SizedBox(width: 16),
                 ElevatedButton(

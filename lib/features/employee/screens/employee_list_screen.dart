@@ -41,6 +41,18 @@ class EmployeeListScreen extends StatelessWidget {
           return _EmployeeList(employees);
         },
       ),
+      bottomSheet: ListTile(
+        title: Text(
+          'Swipe left to delete',
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.grey[600],
+            fontWeight: FontWeight.w300,
+          ),
+        ),
+        tileColor: const Color(0xffF2F2F2),
+        contentPadding: const EdgeInsets.only(bottom: 10, left: 24),
+      ),
     );
   }
 }
@@ -132,15 +144,20 @@ class _EmployeeTile extends StatelessWidget {
       },
       onDismissed: (_) async {
         final repo = context.read<EmployeeRepository>();
-        await repo.deleteEmployee(employee.id);
 
-        if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Employee data has been deleted'),
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Employee data has been deleted'),
+            action: SnackBarAction(
+              label: 'Undo',
+              onPressed: () async {
+                await repo.addEmployee(employee);
+              },
             ),
-          );
-        }
+          ),
+        );
+
+        await repo.deleteEmployee(employee.id);
       },
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
