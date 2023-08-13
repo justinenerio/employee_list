@@ -15,7 +15,6 @@ $ flutter run --flavor production --target lib/main.dart
 
 - flutter_bloc
 - freezed
-- auto_route
 
 ## Tested on:
 
