@@ -1,5 +1,7 @@
 # Employee List
 
+Technical coding assignment for job hiring
+
 ---
 
 ## Getting Started 🚀
