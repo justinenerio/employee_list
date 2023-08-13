@@ -1,7 +1,16 @@
+import 'package:hive/hive.dart';
+
+part 'employee_role.g.dart';
+
+@HiveType(typeId: 1)
 enum EmployeeRole {
+  @HiveField(0)
   productDesigner,
+  @HiveField(1)
   flutterDeveloper,
+  @HiveField(2)
   qaTester,
+  @HiveField(3)
   productOwner,
 }
 

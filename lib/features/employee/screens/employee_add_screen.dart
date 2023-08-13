@@ -1,9 +1,14 @@
 import 'package:employee_list/core/date_time_ext.dart';
+import 'package:employee_list/core/loader.dart';
 import 'package:employee_list/features/employee/models/employee_model.dart';
 import 'package:employee_list/features/employee/models/employee_role.dart';
-import 'package:employee_list/features/employee/wigets/calendar_widget.dart';
+import 'package:employee_list/features/employee/services/bloc.dart';
+import 'package:employee_list/features/employee/services/repository.dart';
+import 'package:employee_list/features/employee/widgets/calendar_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:uuid/uuid.dart';
 
 class EmployeeAddScreen extends StatelessWidget {
   const EmployeeAddScreen({super.key, this.employee});
@@ -14,20 +19,45 @@ class EmployeeAddScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final isNew = employee == null;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('${isNew ? 'Add' : 'Edit'} Employee Details'),
-        actions: [
-          if (!isNew)
-            IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: () {
-                //TODO delete
-              },
-            )
-        ],
+    return BlocProvider(
+      create: (context) => EmployeeCubit(context.read<EmployeeRepository>()),
+      child: BlocConsumer<EmployeeCubit, EmployeeState>(
+        listener: (context, state) {
+          state.maybeMap(
+            success: (state) {
+              Navigator.of(context).pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Success!')),
+              );
+            },
+            error: (state) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Error. Please try again.')),
+              );
+            },
+            orElse: () {},
+          );
+        },
+        builder: (context, state) {
+          return Loader(
+            isLoading: state.isProcessing,
+            child: Scaffold(
+              appBar: AppBar(
+                title: Text('${isNew ? 'Add' : 'Edit'} Employee Details'),
+                actions: [
+                  if (!isNew)
+                    IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () =>
+                          context.read<EmployeeCubit>().delete(employee!),
+                    )
+                ],
+              ),
+              body: _Body(employee),
+            ),
+          );
+        },
       ),
-      body: _Body(employee),
     );
   }
 }
@@ -224,16 +254,20 @@ class __BodyState extends State<_Body> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       final emp = EmployeeModel(
+                        id: widget.employee?.id ?? const Uuid().v4(),
                         name: _nameController.text,
                         role: _role!,
                         startDate: _startDate,
                         endDate: _endDate,
                       );
-                      print(emp);
-                      //TODO add/edit
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
+
+                      final repo = context.read<EmployeeCubit>();
+
+                      if (widget.employee != null) {
+                        repo.update(emp);
+                      } else {
+                        repo.add(emp);
+                      }
                     }
                   },
                   child: const Text('Save'),

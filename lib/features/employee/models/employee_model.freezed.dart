@@ -16,9 +16,15 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EmployeeModel {
+  @HiveField(0)
+  String get id => throw _privateConstructorUsedError;
+  @HiveField(1)
   String get name => throw _privateConstructorUsedError;
+  @HiveField(2)
   EmployeeRole get role => throw _privateConstructorUsedError;
+  @HiveField(3)
   DateTime get startDate => throw _privateConstructorUsedError;
+  @HiveField(4)
   DateTime? get endDate => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -33,7 +39,11 @@ abstract class $EmployeeModelCopyWith<$Res> {
       _$EmployeeModelCopyWithImpl<$Res, EmployeeModel>;
   @useResult
   $Res call(
-      {String name, EmployeeRole role, DateTime startDate, DateTime? endDate});
+      {@HiveField(0) String id,
+      @HiveField(1) String name,
+      @HiveField(2) EmployeeRole role,
+      @HiveField(3) DateTime startDate,
+      @HiveField(4) DateTime? endDate});
 }
 
 /// @nodoc
@@ -49,12 +59,17 @@ class _$EmployeeModelCopyWithImpl<$Res, $Val extends EmployeeModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? role = null,
     Object? startDate = null,
     Object? endDate = freezed,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -84,7 +99,11 @@ abstract class _$$_EmployeeModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String name, EmployeeRole role, DateTime startDate, DateTime? endDate});
+      {@HiveField(0) String id,
+      @HiveField(1) String name,
+      @HiveField(2) EmployeeRole role,
+      @HiveField(3) DateTime startDate,
+      @HiveField(4) DateTime? endDate});
 }
 
 /// @nodoc
@@ -98,12 +117,17 @@ class __$$_EmployeeModelCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? role = null,
     Object? startDate = null,
     Object? endDate = freezed,
   }) {
     return _then(_$_EmployeeModel(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -126,26 +150,35 @@ class __$$_EmployeeModelCopyWithImpl<$Res>
 
 /// @nodoc
 
+@HiveType(typeId: 0)
 class _$_EmployeeModel extends _EmployeeModel {
   const _$_EmployeeModel(
-      {required this.name,
-      required this.role,
-      required this.startDate,
-      this.endDate})
+      {@HiveField(0) required this.id,
+      @HiveField(1) required this.name,
+      @HiveField(2) required this.role,
+      @HiveField(3) required this.startDate,
+      @HiveField(4) this.endDate})
       : super._();
 
   @override
+  @HiveField(0)
+  final String id;
+  @override
+  @HiveField(1)
   final String name;
   @override
+  @HiveField(2)
   final EmployeeRole role;
   @override
+  @HiveField(3)
   final DateTime startDate;
   @override
+  @HiveField(4)
   final DateTime? endDate;
 
   @override
   String toString() {
-    return 'EmployeeModel(name: $name, role: $role, startDate: $startDate, endDate: $endDate)';
+    return 'EmployeeModel(id: $id, name: $name, role: $role, startDate: $startDate, endDate: $endDate)';
   }
 
   @override
@@ -153,6 +186,7 @@ class _$_EmployeeModel extends _EmployeeModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_EmployeeModel &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.role, role) || other.role == role) &&
             (identical(other.startDate, startDate) ||
@@ -161,7 +195,8 @@ class _$_EmployeeModel extends _EmployeeModel {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, role, startDate, endDate);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, role, startDate, endDate);
 
   @JsonKey(ignore: true)
   @override
@@ -172,19 +207,27 @@ class _$_EmployeeModel extends _EmployeeModel {
 
 abstract class _EmployeeModel extends EmployeeModel {
   const factory _EmployeeModel(
-      {required final String name,
-      required final EmployeeRole role,
-      required final DateTime startDate,
-      final DateTime? endDate}) = _$_EmployeeModel;
+      {@HiveField(0) required final String id,
+      @HiveField(1) required final String name,
+      @HiveField(2) required final EmployeeRole role,
+      @HiveField(3) required final DateTime startDate,
+      @HiveField(4) final DateTime? endDate}) = _$_EmployeeModel;
   const _EmployeeModel._() : super._();
 
   @override
+  @HiveField(0)
+  String get id;
+  @override
+  @HiveField(1)
   String get name;
   @override
+  @HiveField(2)
   EmployeeRole get role;
   @override
+  @HiveField(3)
   DateTime get startDate;
   @override
+  @HiveField(4)
   DateTime? get endDate;
   @override
   @JsonKey(ignore: true)

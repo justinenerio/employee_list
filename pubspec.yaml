@@ -21,7 +21,9 @@ dependencies:
   line_icons: ^2.0.3
   calendar_date_picker2: ^0.5.2
   dart_date: ^1.2.2
-  sliver_tools: ^0.2.12
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  uuid: ^3.0.7
   
 dev_dependencies:
   bloc_test: ^9.1.2
@@ -34,6 +36,8 @@ dev_dependencies:
   flutter_gen_runner: ^5.3.1
   freezed: ^2.4.1
   json_serializable: ^6.7.1
+
+  hive_generator: ^2.0.0
 
 flutter_gen:
   integrations:

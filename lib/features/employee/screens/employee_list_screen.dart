@@ -1,28 +1,13 @@
 import 'package:employee_list/features/employee/models/employee_model.dart';
 import 'package:employee_list/features/employee/models/employee_role.dart';
 import 'package:employee_list/features/employee/screens/employee_add_screen.dart';
+import 'package:employee_list/features/employee/services/repository.dart';
 import 'package:employee_list/gen/assets.gen.dart';
+import 'package:employee_list/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:intl/intl.dart';
-
-final _dummyEmployees = [
-  EmployeeModel(
-    name: 'name',
-    role: EmployeeRole.flutterDeveloper,
-    startDate: DateTime.now(),
-  ),
-  EmployeeModel(
-    name: 'name2',
-    role: EmployeeRole.flutterDeveloper,
-    startDate: DateTime.now(),
-  ),
-  EmployeeModel(
-    name: 'name3',
-    role: EmployeeRole.flutterDeveloper,
-    startDate: DateTime.now(),
-    endDate: DateTime.now().add(const Duration(days: 2)),
-  ),
-];
 
 class EmployeeListScreen extends StatelessWidget {
   const EmployeeListScreen({super.key});
@@ -44,8 +29,18 @@ class EmployeeListScreen extends StatelessWidget {
         ),
         child: const Icon(Icons.add),
       ),
-      // body: const _EmptyWidget(),
-      body: _EmployeeList(_dummyEmployees),
+      body: ValueListenableBuilder(
+        valueListenable: Hive.box<EmployeeModel>(employeesBox).listenable(),
+        builder: (context, box, widget) {
+          final employees = box.values.toList();
+
+          if (employees.isEmpty) {
+            return const _EmptyWidget();
+          }
+
+          return _EmployeeList(employees);
+        },
+      ),
     );
   }
 }
@@ -135,13 +130,17 @@ class _EmployeeTile extends StatelessWidget {
           },
         );
       },
-      onDismissed: (direction) {
-        //TODO delete
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Employee data has been deleted'),
-          ),
-        );
+      onDismissed: (_) async {
+        final repo = context.read<EmployeeRepository>();
+        await repo.deleteEmployee(employee.id);
+
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Employee data has been deleted'),
+            ),
+          );
+        }
       },
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
