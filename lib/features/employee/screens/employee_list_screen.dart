@@ -1,9 +1,9 @@
+import 'package:employee_list/data/db.dart';
 import 'package:employee_list/features/employee/models/employee_model.dart';
 import 'package:employee_list/features/employee/models/employee_role.dart';
 import 'package:employee_list/features/employee/screens/employee_add_screen.dart';
 import 'package:employee_list/features/employee/services/repository.dart';
 import 'package:employee_list/gen/assets.gen.dart';
-import 'package:employee_list/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';

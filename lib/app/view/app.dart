@@ -1,7 +1,7 @@
+import 'package:employee_list/data/db.dart';
 import 'package:employee_list/features/employee/screens/employee_list_screen.dart';
 import 'package:employee_list/features/employee/services/repository.dart';
 import 'package:employee_list/l10n/l10n.dart';
-import 'package:employee_list/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
